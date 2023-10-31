@@ -42,7 +42,7 @@ class Blogres(Resource):
         return make_response(
             jsonify({"message": newrec_dict,"message": "Blog has been created successfully" }),200)
 
-api.add_resource(Blogres, '/blog')
+api.add_resource(Blogres, '/blog', endpoint='blog')
 
 
 class BlogById(Resource):
@@ -90,3 +90,48 @@ class BlogById(Resource):
         return response_body
     
 api.add_resource(BlogById,'/blog/<int:id>', endpoint='blogid')
+
+class Users(Resource):
+    def get(self):
+        users=[user.to_dict() for user in User.query.all()]
+
+
+        response=make_response(jsonify(users), 200)
+        return response
+    
+api.add_resource(Users,'/users', endpoint='users')
+
+class Comments(Resource):
+    def get(self):
+        comments=[comment.to_dict() for comment in Comment.query.all()]
+
+        response=make_response(jsonify(comments),200)
+
+        return response
+    
+    def post(self):
+        new_comment=Comment(
+            comment_body=request.get_json()['comment_body'],
+            user_id= request.get_json()['user_id'],
+            blog_id= request.get_json()['blog_id']
+        )
+
+        db.session.add(new_comment)
+        db.session.commit()
+
+        new_comment_dict=new_comment.to_dict()
+
+        response=make_response(jsonify(new_comment_dict),201)
+        return response
+             
+    
+api.add_resource(Comments, '/comments', endpoint='comments')
+
+class CommentById(Resource):
+    def get(self):
+        pass
+
+
+
+if __name__=='__main__':
+    app.run(debug=True, port=5000)

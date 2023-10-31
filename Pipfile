@@ -12,6 +12,7 @@ flask-cors = "*"
 sqlalchemy-serializer = "*"
 faker = "*"
 sqlalchemy = "*"
+importlib-resources = "*"
 
 [dev-packages]
 
