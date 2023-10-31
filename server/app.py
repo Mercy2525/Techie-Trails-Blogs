@@ -128,9 +128,27 @@ class Comments(Resource):
 api.add_resource(Comments, '/comments', endpoint='comments')
 
 class CommentById(Resource):
-    def get(self):
-        pass
+    def get(self,id):
+        comment = Comment.query.filter_by(id=id).first()
+        if not comment:
+           return("comment not found"),404
+        comment_to_dict= comment.to_dict()
+        response = make_response(jsonify(comment_to_dict),201)
+        return response 
+    
 
+    def delete(self,id):
+        comment = Comment.query.filter_by(id=id).first()
+        if not comment:
+            return("comment not found"),404
+        db.session.delete(comment)
+        db.session.commit()
+        response = make_response({"message": "comment deleteted successfully"},200)
+        return response
+
+        
+api.add_resource(CommentById,'/comment/<int:id>', endpoint='comment')
+ 
 
 
 if __name__=='__main__':
