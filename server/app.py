@@ -36,20 +36,30 @@ class Blogres(Resource):
         newrec_dict=newrec.to_dict()
 
         return make_response(
-            jsonify(newrec_dict),200)
+            jsonify({"message": newrec_dict,"message": "Blog has been created successfully" }),200)
 
 api.add_resource(Blogres, '/blog')
 
 
 class BlogById(Resource):
     def get(self,id):
-        blog= Blog.query.filter_by(id=id).first().to_dict()
+        blog= Blog.query.filter_by(id=id).first()
 
-        response=make_response(jsonify(blog),200)
+        if not blog:
+            return {"error": "Blog not found"}, 404
+
+        
+        blog_dict=blog.to_dict()
+
+        response=make_response(jsonify(blog_dict),200)
         return response
     
     def patch(self,id):
         blog= Blog.query.filter_by(id=id).first()
+
+        if not blog:
+            return {"error": "Blog not found"}, 404
+
 
         for attr in request.get_json():
             setattr(blog,attr,request.get_json()[attr])
@@ -63,9 +73,11 @@ class BlogById(Resource):
             return response
 
 
-
     def delete(self,id):
         blog= Blog.query.filter_by(id=id).first() 
+
+        if not blog:
+            return {"error": "Blog not found"}, 404
 
         db.session.delete(blog)
         db.session.commit()
