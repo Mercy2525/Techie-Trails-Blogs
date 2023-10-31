@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -69,3 +70,15 @@ def delete_blog(blog_id):
 
 if __name__ == '__main__':
     app.run(debug=True)
+=======
+from flask import Flask
+from flask_migrate import Migrate
+from models import db,User,Blog,Comments
+
+app = Flask(__name__)
+
+app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///app.db'
+app.config['JSONIFY_PRETTYPRINT_REGULAR']= True
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+db.init_app(app)
+>>>>>>> 5c7e856b519af7aea0d2922c7ba3a272273f5d58
