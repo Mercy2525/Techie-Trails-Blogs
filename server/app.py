@@ -137,13 +137,31 @@ class CommentById(Resource):
         return response 
     
 
+    def patch(self,id):
+        comment = Comment.query.filter_by(id=id).first()
+        if not comment:
+            return ('comment not found'), 404
+        
+        for attr in request.get_json():
+            setattr(comment,attr,request.get_json()[attr])
+
+            db.session.add(comment)
+            db.session.commit()
+
+            comment_dict=comment.to_dict()
+
+            response=make_response(jsonify(comment_dict),201)
+
+            return response
+
+
     def delete(self,id):
         comment = Comment.query.filter_by(id=id).first()
         if not comment:
             return("comment not found"),404
         db.session.delete(comment)
         db.session.commit()
-        response = make_response({"message": "comment deleteted successfully"},200)
+        response = make_response({"message": "comment deleted successfully"},200)
         return response
 
         
