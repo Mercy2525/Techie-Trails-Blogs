@@ -1,0 +1,63 @@
+/* BlogForm.css */
+
+body{
+    background-image: url("https://images.unsplash.com/photo-1423666639041-f56000c27a9a?auto=format&fit=crop&q=60&w=500&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dGVjaG5vbG9neSUyMGFuZCUyMGxpZmVzdHlsZXxlbnwwfHwwfHx8MA%3D%3D");
+    background-size: cover;
+    background-position: center;
+    background-image: 100vh;
+  
+}
+div {
+    background: hwb(180 93% 2%);
+    padding: 20px;
+    border-radius: 5px;
+    margin: 20px;
+    width: 80%;
+    max-width: 400px;
+  
+
+  }
+  
+  /* Style for the heading */
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+  
+  /* Style for form elements */
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Style for labels */
+  label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 1.5rem;
+  }
+  
+  /* Style for input and textarea */
+  input,
+  textarea {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  /* Style for the submit button */
+  button {
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  /* Hover effect for the submit button */
+  button:hover {
+    background: #f45525;
+  }
+  
