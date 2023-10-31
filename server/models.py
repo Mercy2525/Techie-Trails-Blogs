@@ -1,13 +1,3 @@
-# create models, user, blog,com
-# Models-DB
-# Users-name, password,username
-# Blog -blog_title, blog_body, author (10 blogs)
-# Comments- comment_body,  created_at, update_at , name(user_id, blog_id)
-
-
-# Relationships
-# (one User many comments)
-# (one Blog has many comments)
 
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_serializer import SerializerMixin
@@ -19,7 +9,7 @@ class User(db.Model,SerializerMixin):
 
     id =  db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
-    username = db.Column(db.String)
+    username = db.Column(db.String, unique=True)
     comments = db.relationship('Comments', backref='user')
 
 class Blog(db.Model,SerializerMixin):
@@ -32,7 +22,7 @@ class Blog(db.Model,SerializerMixin):
     author = db.Column(db.String)
     comments = db.relationship('Comments', backref='blog')
 
-class Comments(db.Model,SerializerMixin):
+class Comment(db.Model,SerializerMixin):
     __tablename__='comments'
     serialize_rules = ('-user.comments', '-blog.comments',)
 
