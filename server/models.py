@@ -1,11 +1,11 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.hybrid import hybrid_property
-from werkzeug.security import generate_password_hash, check_password_hash
+from flask_bcrypt import Bcrypt
 
-from app import bcrypt
 
 db = SQLAlchemy()
+bcrypt=Bcrypt()
  
 
 
@@ -17,7 +17,8 @@ class User(db.Model, SerializerMixin):
     name = db.Column(db.String)
     username = db.Column(db.String, unique=True)
     comments = db.relationship('Comment', backref='user')
-    _password_hash = db.Column(db.String, nullable=False)
+    _password_hash = db.Column(db.String)
+   
 
      
     @hybrid_property
