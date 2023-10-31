@@ -36,7 +36,7 @@ class Blogres(Resource):
         newrec_dict=newrec.to_dict()
 
         return make_response(
-            jsonify({"message": newrec_dict,"message": "Blog created successfully" }),200)
+            jsonify({"message": newrec_dict,"message": "Blog has been created successfully" }),200)
 
 api.add_resource(Blogres, '/blog')
 
