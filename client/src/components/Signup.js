@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import './Signup.css';
+import '../styles/Signup.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
 import { faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function Signup() {
   const [showPassword, setShowPassword] = useState(false);
@@ -217,12 +217,10 @@ function Signup() {
           </p>
         </div>
       )}
-      {/* <div>
-      <h1>Signup Page</h1>
-      <Link to="/home">Go to Home</Link>
-      <br />
-      <Link to="/blogform">Go to Blog Form</Link>
-    </div> */}
+      <div>
+      
+      <Link to="/navbar">Go to Home</Link>
+    </div>
     </div>
   );
 }
