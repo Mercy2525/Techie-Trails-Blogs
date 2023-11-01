@@ -22,14 +22,14 @@ function Navbar(){
           </Button>
         </BreadcrumbItem>
 
-        {/* <BreadcrumbItem>
+        <BreadcrumbItem>
           <Button colorScheme={'green'}>
             <Link to={'/blogs'}>Blog</Link>
           </Button>
         </BreadcrumbItem>
 
 
-        <BreadcrumbItem isCurrentPage>
+        {/* <BreadcrumbItem isCurrentPage>
             <Button colorScheme='green'>
               <Link to={'/blogform'}>BlogForm</Link>
             </Button>
