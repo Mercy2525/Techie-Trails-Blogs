@@ -1,12 +1,13 @@
 // HomePage.js
 import React from 'react';
 import "./HomePage.css"
-//import Navbar from './Navbar';
+import Navbar from './Navbar';
+// import { Link } from 'react-router-dom';
 
 const HomePage = () => {
   return (
     <div>
-      {/* <Navbar /> */}
+      <Navbar />
       <div className='home'>
       
         <h1>Techie Trails Blog</h1>
@@ -23,6 +24,15 @@ const HomePage = () => {
             Join us in this unique exploration of the harmony between code and music and unlock the potential for a more immersive and productive coding journey.</h2>
             <h3>Author: Sharon Asaja</h3>
       </div>
+      {/* <div>
+      <h1>Welcome to the Home Page</h1>
+      <p>
+        <Link to="/signup">Sign Up</Link>
+      </p>
+      <p>
+        <Link to="/blogform">Create a Blog</Link>
+      </p>
+    </div> */}
     </div>
   );
 };

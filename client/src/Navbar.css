@@ -1,0 +1,37 @@
+/* Navbar.css */
+
+nav {
+    background-color: #191919; /* Background color for the navigation bar */
+    color: aqua; /* Text color for links */
+    padding: 10px;
+    align-items: right;
+    margin-right: 0px;
+    margin-left: 1000px;
+    justify-content: space-between;
+
+  }
+  
+  #navbar {
+    list-style-type: style type 20px;
+    margin: 20;
+    padding: 10px;
+    display: flex;
+  }
+  
+  #navbar li {
+    margin-right: 60px;
+    font-size: 25px;
+   
+  }
+  
+  #navbar a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    transition: color 0.3s;
+  }
+  
+  #navbar a:hover {
+    color: aqua; /* Color when hovering over links */
+  }
+  
