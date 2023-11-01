@@ -6,6 +6,7 @@ import HomePage from './HomePage';
 import BlogForm from './BlogForm';
 import Navbar from './Navbar';
 import About from './About';
+import Blogs from './Blogs';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/blogform" element={<BlogForm />}/>
           <Route path='/about'element={<About/>}/>
+          <Route path='/blogs' element={<Blogs/>} />
         </Route>
         
       </Routes>

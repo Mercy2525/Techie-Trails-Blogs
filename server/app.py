@@ -3,6 +3,7 @@ from flask import Flask, jsonify, request, make_response, session
 from flask_migrate import Migrate
 from flask_restful import Api, Resource
 from werkzeug.exceptions import NotFound
+from flask_cors import CORS
 
 from models import db, Blog, Comment, User
 
@@ -12,16 +13,18 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 app.config['JSONIFY_PRETTYPRINT_REGULAR']= True
 migrate = Migrate(app,db,render_as_batch=True)
 
+CORS(app)
+
 app.secret_key = b'?w\x85Z\x08Q\xbdO\xb8\xa9\xb65Kj\xa9_'
 
 db.init_app(app)
 api = Api(app)
 
-@app.before_request
-def check_if_logged_in():
-    allowed_endpoint=['login','signup','session','logout','users']
-    if not session.get('userid') and request.endpoint not in allowed_endpoint:
-        return {"error":'must login first'}
+# @app.before_request
+# def check_if_logged_in():
+#     allowed_endpoint=['login','signup','session','logout','users']
+#     if not session.get('userid') and request.endpoint not in allowed_endpoint:
+#         return {"error":'must login first'}
     
 
 class SignUp(Resource):
@@ -115,7 +118,7 @@ class Blogres(Resource):
         return make_response(
             jsonify({"message": newrec_dict,"message": "Blog has been created successfully" }),200)
 
-api.add_resource(Blogres, '/blog', endpoint='blog')
+api.add_resource(Blogres, '/blogs', endpoint='blogs')
 
 
 class BlogById(Resource):
