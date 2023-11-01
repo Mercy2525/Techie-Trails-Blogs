@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import "./BlogForm.css"
+import "../styles/BlogForm.css"
+
 
 const BlogForm = ({ onSubmit }) => {
   const [title, setTitle] = useState('');
@@ -9,6 +10,7 @@ const BlogForm = ({ onSubmit }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
     onSubmit({ title, content, author });
     setTitle('');
     setContent('');
@@ -22,7 +24,7 @@ const BlogForm = ({ onSubmit }) => {
   };
 
   return (
-    <div>
+    <div className='blog'>
       <h2>Create a New Blog</h2>
       <form onSubmit={handleSubmit}>
         <label>Title:</label>
