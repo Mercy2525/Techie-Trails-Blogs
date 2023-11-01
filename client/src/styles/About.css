@@ -1,0 +1,71 @@
+.contact {
+    margin: 100px auto;
+    width: 60%;
+    background-image: url(https://images.pexels.com/photos/2047905/pexels-photo-2047905.jpeg?auto=compress&cs=tinysrgb&w=600);
+    background-position: center;
+    background-size: cover; 
+    border-radius: 10px;
+    text-align: center;
+    padding: 100px; 
+}
+.contact h1{
+    color: chartreuse;
+    margin: 40px;
+    padding: 0;
+}
+.about{
+    width: 80%;
+    margin: auto;
+    text-align: center;
+    padding-top: 50px;
+}
+.about-off{
+    flex-basis: 32%;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
+}
+.layer{
+    background:transparent;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left:0;
+    transition: 0.5s;
+}
+.layer:hover{
+    background:rgba(33, 6, 239, 0.7) ;
+}
+.layer h3{
+    width: 100%;
+    font-weight: 600;
+    columns: #fff;
+    font-size: 26px;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    position: absolute;
+    opacity: 1;
+    transition: 0.5s;
+}
+.layer:hover h3{
+    bottom:49%;
+    opacity: 1;
+}.layer p {
+    width: 100%;
+    font-weight: 400;
+    columns: #fff;
+    font-size: 15px;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    position: absolute;
+    opacity: 0;
+    transition: 0.5s;
+}
+.layer:hover p{
+    top:49%;
+    opacity: 1;
+}

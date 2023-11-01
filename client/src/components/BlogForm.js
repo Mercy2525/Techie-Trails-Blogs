@@ -2,31 +2,50 @@ import React, { useState } from 'react';
 import "../styles/BlogForm.css"
 
 
-const BlogForm = ({ onSubmit }) => {
+
+
+const BlogForm = ({handleAdd}) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [author, setAuthor] = useState('');
-  const [file, setFile] = useState(null);
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
     
-    onSubmit({ title, content, author });
-    setTitle('');
-    setContent('');
-    setAuthor('');
-    setFile(null);
+
+    fetch('/blogs', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        blog_title:title,
+        blog_body: content,
+        author:author
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        handleAdd(data) 
+        
+      })
+
+      .catch(e=>console.log(e))
+
+      // e.target.reset()
+
+    
   };
 
-  const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
-    setFile(selectedFile);
-  };
+
+
+  
 
   return (
     <div className='blog'>
       <h2>Create a New Blog</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} >
         <label>Title:</label>
         <input
           type="text"
@@ -47,10 +66,7 @@ const BlogForm = ({ onSubmit }) => {
           value={author}
           onChange={(e) => setAuthor(e.target.value)}
         />
-        <input
-        type="file"
-        onChange={handleFileChange}
-      />
+        
         <button type="submit">Submit</button>
       </form>
     </div>

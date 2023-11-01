@@ -22,6 +22,7 @@ const HomePage = () => {
             Join us in this unique exploration of the harmony between code and music and unlock the potential for a more immersive and productive coding journey.</h2>
             <h3>Author: Sharon Asaja</h3>
       </div>
+     
   
     </div>
   );
