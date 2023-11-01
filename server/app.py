@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import Flask, jsonify, request, make_response
+from flask import Flask, jsonify, request, make_response, session
 from flask_migrate import Migrate
 from flask_restful import Api, Resource
 
@@ -12,10 +12,52 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 app.config['JSONIFY_PRETTYPRINT_REGULAR']= True
 migrate = Migrate(app,db,render_as_batch=True)
 
+app.secret_key = b'?w\x85Z\x08Q\xbdO\xb8\xa9\xb65Kj\xa9_'
 
 db.init_app(app)
 api = Api(app)
 
+class Loginres(Resource):
+    def post(self):
+        data= request.get_json()
+        name=data.get('name')
+        username = data.get('username')
+        password = data.get('password')
+
+        if not username or not password:
+            return{'message': 'Username password required'},400
+        
+        newuser=User(username=username, name=name)
+        newuser.password_hash=(password)
+        session['userid']=newuser.id
+        db.session.add(newuser)
+        db.session.commit()
+        
+
+        return make_response(newuser.to_dict(),201)
+api.add_resource(Loginres,'/login',endpoint='login')   
+
+class Usersignin(Resource):
+    def post(self):
+        data=request.get_json()
+
+        username=data.get('username')
+        password=data.get('password')
+
+        userinst = User.query.filter(User.username==username).first()
+
+        if not username:
+            return{'message':'Username and password required'},400
+        
+        
+
+        if userinst and userinst.authenticate(password):
+            session['userid'] = userinst.id
+            return {'message':'login succesful'}
+                
+        else:
+            return {'message':'invalid password or username'},402
+api.add_resource(Usersignin,'/usersignin',endpoint='usersignin')
 
 class Blogres(Resource):
     def get(self):
