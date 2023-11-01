@@ -38,6 +38,10 @@ class SignUp(Resource):
         if not username or not password:
             return{'message': 'Username or password required'},400
         
+        existing_user = User.query.filter_by(username=username).first()
+        if existing_user:
+            return {'message': 'Username already in use. Please choose a different one.'}, 400
+        
         newuser=User(username=username, name=name)
         newuser.password_hash=password
 

@@ -3,6 +3,7 @@ import "../styles/BlogForm.css"
 
 
 
+
 const BlogForm = ({handleAdd}) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -11,7 +12,7 @@ const BlogForm = ({handleAdd}) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    
 
     fetch('/blogs', {
       method: 'POST',
@@ -26,13 +27,18 @@ const BlogForm = ({handleAdd}) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        handleAdd(data)
+        handleAdd(data) 
+        
       })
+
       .catch(e=>console.log(e))
-    
-   
+
+      // e.target.reset()
+
     
   };
+
+
 
   
 

@@ -44,7 +44,7 @@ function Signup() {
 
     try {
       //  API request for signup
-      const response = await fetch('/Signup', {
+      const response = await fetch('/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -55,12 +55,12 @@ function Signup() {
       if (response.ok) {
         const data = await response.json();
         setSignupFormData({
-          fullName: '',
+          name: '',
           username: '',
           password: '',
           confirmPassword: '',
         });
-        alert('Signup successful: ' + data.message);
+        alert('Signup successful: ' + data.username);
       } else {
         alert('Signup failed');
       }
@@ -73,7 +73,7 @@ function Signup() {
   const handleLogin = async () => {
     try {
       // API request for login
-      const response = await fetch('/Login', {
+      const response = await fetch('/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -122,7 +122,7 @@ function Signup() {
           <input
             type="text"
             placeholder="Full Name"
-            value={signupFormData.fullName}
+            value={signupFormData.name}
             onChange={(e) =>
               setSignupFormData({ ...signupFormData, fullName: e.target.value })
             }
@@ -218,8 +218,7 @@ function Signup() {
         </div>
       )}
       <div>
-      
-      <Link to="/navbar">Go to Home</Link>
+
     </div>
     </div>
   );

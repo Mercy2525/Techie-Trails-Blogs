@@ -2,10 +2,16 @@ import React from 'react'
 import { Card, CardHeader, CardBody, CardFooter,Heading,Box,Text,Stack,StackDivider, Button, Divider, ButtonGroup } from '@chakra-ui/react'
 import { useState,useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import BlogForm from './BlogForm'
 
 function Blogs() {
 
     const [blogs,setBlogs]=useState([])
+    
+
+    function handleAdd(addedBlog){
+        setBlogs([...blogs,addedBlog])
+    }
 
     useEffect(()=>{
 
@@ -14,7 +20,7 @@ function Blogs() {
         .then(data=>{setBlogs(data)
         console.log(data)})
         .catch(e=>console.log(e))
-    })
+    },[])
 
 
   return (
@@ -29,30 +35,29 @@ function Blogs() {
                 <Stack mt='6' spacing='3'>
                   <Heading size='md'>Author: {blog.author}</Heading>
                   <Text>
-                    Blog Title: {blog.blog_title}
+                    Blog Title: {blog.blog_title} {blog.blog_body}
                   </Text>
                 </Stack>
               </CardBody>
               <Divider />
               <CardFooter>
                 <ButtonGroup spacing='2'>
-                
-                <Link to='/signup'>
-                    <Button variant='solid' colorScheme='blue'>
+                <Link to={`/blog/${blog.id}`}>
+                <Button variant='solid' colorScheme='blue'>
                         Read More...
                     </Button>
-                
-                </Link>
 
-                  
-                  
+                </Link>
+                    
+                
                 </ButtonGroup>
               </CardFooter>
 
               </>
             ))}
-            
         </Card>
+
+        <BlogForm handleAdd={handleAdd}/>
 
 
     </div>
