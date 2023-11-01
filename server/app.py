@@ -2,9 +2,9 @@ from flask import Flask
 from flask import Flask, jsonify, request, make_response, session
 from flask_migrate import Migrate
 from flask_restful import Api, Resource
+from werkzeug.exceptions import NotFound
 
 from models import db, Blog, Comment, User
-
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
@@ -17,27 +17,38 @@ app.secret_key = b'?w\x85Z\x08Q\xbdO\xb8\xa9\xb65Kj\xa9_'
 db.init_app(app)
 api = Api(app)
 
-class Loginres(Resource):
+@app.before_request
+def check_if_logged_in():
+    allowed_endpoint=['login','signup','session','logout','users']
+    if not session.get('userid') and request.endpoint not in allowed_endpoint:
+        return {"error":'must login first'}
+    
+
+class SignUp(Resource):
     def post(self):
         data= request.get_json()
+
         name=data.get('name')
         username = data.get('username')
         password = data.get('password')
 
         if not username or not password:
-            return{'message': 'Username password required'},400
+            return{'message': 'Username or password required'},400
         
         newuser=User(username=username, name=name)
-        newuser.password_hash=(password)
-        session['userid']=newuser.id
+        newuser.password_hash=password
+
         db.session.add(newuser)
         db.session.commit()
+
+        session['userid']=newuser.id
         
-
         return make_response(newuser.to_dict(),201)
-api.add_resource(Loginres,'/login',endpoint='login')   
+    
+api.add_resource(SignUp,'/signup',endpoint='signup')   
 
-class Usersignin(Resource):
+
+class Login(Resource):
     def post(self):
         data=request.get_json()
 
@@ -49,15 +60,35 @@ class Usersignin(Resource):
         if not username:
             return{'message':'Username and password required'},400
         
-        
-
         if userinst and userinst.authenticate(password):
             session['userid'] = userinst.id
-            return {'message':'login succesful'}
+
+            return {'message':'login successful', "dict":userinst.to_dict(), "status":201}
                 
         else:
             return {'message':'invalid password or username'},402
-api.add_resource(Usersignin,'/usersignin',endpoint='usersignin')
+        
+api.add_resource(Login,'/login',endpoint='login')
+
+class Logout(Resource):
+    def delete(self):
+        if session.get('userid'):
+            session['userid']=None
+            return {'message': 'User logged out successfully'}
+        else: 
+            return {"error": "User must be logged in"}
+
+api.add_resource(Logout, '/logout', endpoint='logout')
+
+class CheckSession(Resource):
+    def get(self):
+        if session.get('userid'):
+            return 'user in session'
+        else:
+            return 'user is not in session'
+        
+
+api.add_resource(CheckSession, '/session', endpoint='session')
 
 class Blogres(Resource):
     def get(self):
@@ -208,6 +239,14 @@ class CommentById(Resource):
 
         
 api.add_resource(CommentById,'/comment/<int:id>', endpoint='comment')
+
+@app.errorhandler(NotFound)
+def handle_not_found(e):
+    response = make_response(
+        "Not Found:The requested endpoint(resource) does not exist",
+        404
+        )
+    return response
  
 
 
