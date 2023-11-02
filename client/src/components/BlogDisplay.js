@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 
 
 import {Card, CardBody, Heading,Text,
-  Stack,  Divider, Button
+  Stack,  Divider, Button, Flex, Box
 } from "@chakra-ui/react";
 
 import { useParams } from "react-router-dom";
-import TryComments from "./Comments";
+import Comments from "./Comments";
 
 function BlogDisplay({user}) {
   const { id } = useParams();
@@ -30,32 +30,45 @@ function BlogDisplay({user}) {
 
   return (
     <div>
-      <Card alignItems={"center"} alignContent={"center"} p={4}>
-        <>
-          <CardBody>
-            <Stack mt="6" spacing="3">
-              <Heading color={"orange.500"} size="lg">
-                {singleBlog.blog_title}
-              </Heading>
+    
+        <Box p={5}> 
+            <Card borderRadius="lg" boxShadow="lg" p={5} bgColor="gray.300"  >
+              <>
+                <CardBody>
+                  <Stack mt="6" spacing="3">
+                    <Heading textAlign={"center"} color={"orange.500"} size="lg">
+                      {singleBlog.blog_title}
+                    </Heading>
 
-              <Text>Blog Body: {singleBlog.blog_body}</Text>
-              <Text textAlign={"right"}>Authored By: {singleBlog.author}</Text>
-            </Stack>
-          </CardBody>
-          <Button colorScheme="red" textAlign={'right'}>Delete Blog</Button>
-          <Divider />
-          <Heading size={"sm"}>Comments</Heading>
-          {singleBlog.comments.map((comment) => (
-            <div key={comment.id}>
-              <Text> {comment.user.name} </Text>
+                    <Text>Blog Body: {singleBlog.blog_body}</Text>
+                    <Heading size={'md'}>Authored By: {singleBlog.author}</Heading>
+                    
+                  </Stack>
+                </CardBody>
 
-              <Text>{comment.comment_body} </Text>
-            </div>
-          ))}
-        </>
-      </Card>
+                <Flex paddingRight="30px" justifyContent="flex-end">
+                    <Button _hover={{ bg:'red' }} size={"sm"} style={{ marginLeft: 'auto' }} colorScheme="blue">Delete Blog</Button>
+                </Flex>
+                
+                <Divider p={2} />
+                <Heading p={3} size={"sm"}>Blog Comments</Heading>
+                {singleBlog.comments.map((comment) => (
+                  <div key={comment.id}>
 
-      <TryComments user={user} singleBlog={singleBlog} />
+                    <Flex paddingLeft="30px" justifyContent="flex-start">            
+
+                      <Text>{comment.comment_body}.  
+                      <Box fontWeight="bold" as="span" color="orange.500"> comment by: </Box>
+                      {comment.user.name}
+                      </Text>
+                     </Flex>
+                  </div>
+                ))}
+              </>
+            </Card>
+          </Box>
+
+      <Comments user={user} singleBlog={singleBlog} />
     </div>
   );
 }
