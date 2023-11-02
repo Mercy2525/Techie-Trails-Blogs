@@ -121,8 +121,12 @@ class Blogres(Resource):
 
         newrec_dict=newrec.to_dict()
 
-        return make_response(
-            jsonify({"message": newrec_dict,"message": "Blog has been created successfully" }),200)
+        response=make_response(jsonify(newrec_dict))
+        response.content_type='application/json'
+
+        return response
+
+        
 
 api.add_resource(Blogres, '/blogs', endpoint='blogs')
 
@@ -203,7 +207,9 @@ class Comments(Resource):
 
         new_comment_dict=new_comment.to_dict()
 
-        response=make_response(jsonify(new_comment_dict),201)
+        response=make_response(jsonify(new_comment_dict))
+        response.content_type='application/json'
+   
         return response
              
     

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, CardHeader, CardBody, CardFooter,Heading,Box,Text,Stack,StackDivider, Button, Divider, ButtonGroup,SimpleGrid } from '@chakra-ui/react'
+import { Card, CardBody,Heading,Box,Text,Stack,StackDivider, Button, SimpleGrid, Flex } from '@chakra-ui/react'
 import { useState,useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import BlogForm from './BlogForm'
@@ -27,30 +27,35 @@ function Blogs() {
 
   return (
     <div>
-        <Heading textAlign={'right'} size='lg' textTransform='uppercase' >All Blogs</Heading>
+        <Heading textAlign={'center'} size='lg' textTransform='uppercase' >All Blogs</Heading>
 
-        <Card >
-                <CardBody>
+        <Card  borderRadius="lg"  boxShadow="lg" p={5}
+            bgColor="gray.300" >
+                <CardBody  >
                     <Stack divider={<StackDivider />} spacing='4'>
 
                         <SimpleGrid  columns={4} spacingX='40px' spacingY='20px' >
 
                         {blogs.map((blog)=>(
-                            <Box p={4} border="2px solid rgba(0, 0, 0, 0.2)"   maxW={'sm'} key={blog.id}>
+                            <Box  borderWidth="1px" borderRadius="lg"   boxShadow="lg"
+                            p={10}  bgColor="whiteAlpha.800"  border="2px white"   maxW={'sm'} key={blog.id}>
 
                                 <Heading textAlign={'center'} color={'orange.500'} size='xs' textTransform='uppercase'>
-                                     {blog.blog_title}
+                                    Blog Title: {blog.blog_title}
                                 </Heading>
                               
 
                                 <Text pt='2' fontSize='sm'>
-                                    Author: {blog.author}
+                                    Written By: {blog.author}
                                 </Text>
                             
                                 <Link to={`/blog/${blog.id}`}>
-                                    <Button size={'xs'} textAlign={'right'} variant='outline' colorScheme='blue'>
+                                <Flex paddingRight="30px" justifyContent="flex-end">
+
+                                    <Button size={'sm'} variant='ghost' colorScheme='blue'>
                                             Read More...
                                     </Button>
+                                </Flex> 
 
                                 </Link>
 
