@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { Route, Routes } from 'react-router-dom';
-
+import { Center, Heading } from '@chakra-ui/react';
 import Signup from './Signup';
 import HomePage from './HomePage';
 import Navbar from './Navbar';
@@ -22,6 +22,8 @@ function App() {
 
   return (
     <div>
+
+      <Heading color={'orange.600'} p={2} size={'lg'} textAlign={'center'} textTransform='uppercase' >Techie Trails Blogs</Heading>
           
       <Routes>
           <Route element={<Navbar/>}>

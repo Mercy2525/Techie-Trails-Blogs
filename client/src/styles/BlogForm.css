@@ -1,10 +1,18 @@
+.try{
+  display: grid;
+  place-items: center;
+
+}
+
 .blog {
-    background: hwb(180 93% 2%);
+    background: #CBD5E0;
     padding: 20px;
     border-radius: 5px;
     margin: 20px;
     width: 80%;
-    max-width: 400px;
+    max-width: 750px;
+  
+    
   }
   
   /* Style for the heading */
@@ -36,9 +44,9 @@
   }
   
   /* Style for the submit button */
-  button {
-    background:black;
-    color: black;
+  .blog button {
+    background: #273974;
+    color: white;
     border: none;
     border-radius: 5px;
     padding: 10px;
@@ -47,6 +55,6 @@
   
   /* Hover effect for the submit button */
   button:hover {
-    background: #f45525;
+    background: black;
   }
   

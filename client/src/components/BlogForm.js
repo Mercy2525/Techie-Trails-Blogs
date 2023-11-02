@@ -11,7 +11,9 @@ const BlogForm = ({handleAdd}) => {
   
 
   const handleSubmit = (e) => {
+    e.target.reset()
     e.preventDefault();
+    
     
 
     fetch('/blogs', {
@@ -26,23 +28,18 @@ const BlogForm = ({handleAdd}) => {
       }),
     })
       .then((response) => response.json())
-      .then((data) => {
-        handleAdd(data) 
-        
-      })
-
+      .then((data) => handleAdd(data))
       .catch(e=>console.log(e))
 
-      // e.target.reset()
-
+      setTitle('');
+      setContent('');
+      setAuthor('');
     
   };
 
 
-
-  
-
   return (
+    <div className='try'> 
     <div className='blog'>
       <h2>Create a New Blog</h2>
       <form onSubmit={handleSubmit} >
@@ -69,6 +66,7 @@ const BlogForm = ({handleAdd}) => {
         
         <button type="submit">Submit</button>
       </form>
+    </div>
     </div>
   );
 };
