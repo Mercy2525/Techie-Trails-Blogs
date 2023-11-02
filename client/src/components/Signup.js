@@ -9,10 +9,11 @@ function Signup() {
   const [showPassword, setShowPassword] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState(null);
 
 
   const [signupFormData, setSignupFormData] = useState({
-    fullName: '',
+    name: '',
     username: '',
     password: '',
     confirmPassword: '',
@@ -124,7 +125,7 @@ function Signup() {
             placeholder="Full Name"
             value={signupFormData.name}
             onChange={(e) =>
-              setSignupFormData({ ...signupFormData, fullName: e.target.value })
+              setSignupFormData({ ...signupFormData, name: e.target.value })
             }
           />
           <input
