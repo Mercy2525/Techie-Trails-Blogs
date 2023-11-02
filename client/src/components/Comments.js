@@ -1,7 +1,7 @@
 import React, { useEffect,useState } from 'react'
-import { Button } from '@chakra-ui/react'
+import { Button,Box,Card, Heading } from '@chakra-ui/react'
 
-function TryComments({singleBlog, user}) {
+function Comments({singleBlog, user}) {
 
     const [comment, setComment] = useState([]);
     const[addComment,setAddComment]=useState('')
@@ -38,22 +38,28 @@ function TryComments({singleBlog, user}) {
       .then(data=>handleAdd(data))
       .catch(e=>console.log(e))
 
+      e.target.reset()
+
     }
 
    
   return (
     <div>
-        <h4>Add comment</h4>
+
+        <Box p={5}> 
+        <Heading size={'md'} textAlign={'center'}>Add a comment</Heading>
+               
         <form onSubmit={submitComment}>
             <textarea
               placeholder="Leave a comment..."
               // value={comment}
               onChange={(e) => setAddComment(e.target.value)}
             />           
-            <Button type='submit'>Add comment</Button>
+            <Button _hover={{ bg:'black' }} colorScheme='blue' type='submit'>Add comment</Button>
         </form>
+        </Box>
     </div>
   )
 }
 
-export default TryComments
+export default Comments
