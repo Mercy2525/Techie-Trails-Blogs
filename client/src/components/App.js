@@ -6,7 +6,6 @@ import HomePage from './HomePage';
 import Navbar from './Navbar';
 import About from './About';
 import Blogs from './Blogs';
-import BenBlogs from './BenBlogs';
 import BlogDisplay from './BlogDisplay';
 
 
@@ -30,8 +29,7 @@ function App() {
               <Route path="/signup" element={<Signup />} />
               <Route path="/blog/:id" element={<BlogDisplay user={user} />}/>
               <Route path='/about'element={<About/>}/>
-              <Route path='/blogs' element={<Blogs  />} />
-              <Route path='b.blogs' element={<BenBlogs/>} />        
+              <Route path='/blogs' element={<Blogs  />} />        
           </Route> 
       </Routes>
     

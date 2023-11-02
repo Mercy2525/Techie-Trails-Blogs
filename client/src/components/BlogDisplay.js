@@ -1,26 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Heading,
-  Box,
-  Text,
-  Stack,
-  StackDivider,
-  Button,
-  Divider,
-  ButtonGroup,
+
+import {Card, CardBody, Heading,Text,
+  Stack,  Divider, Button
 } from "@chakra-ui/react";
 
 import { useParams } from "react-router-dom";
-import Comments from "./Comments";
-import TryComments from "./TryComments";
+import TryComments from "./Comments";
 
-function BlogDisplay({ user }) {
+function BlogDisplay({user}) {
   const { id } = useParams();
 
   const [singleBlog, setSingleBlog] = useState([]);
@@ -33,7 +21,9 @@ function BlogDisplay({ user }) {
       })
       .catch((e) => console.log(e));
   }, [id]);
-  console.log(user.id);
+
+
+
   if (!singleBlog.comments) {
     return <div>No Comments available for this blog.</div>;
   }
@@ -52,10 +42,11 @@ function BlogDisplay({ user }) {
               <Text textAlign={"right"}>Authored By: {singleBlog.author}</Text>
             </Stack>
           </CardBody>
+          <Button colorScheme="red" textAlign={'right'}>Delete Blog</Button>
           <Divider />
           <Heading size={"sm"}>Comments</Heading>
           {singleBlog.comments.map((comment) => (
-            <div>
+            <div key={comment.id}>
               <Text> {comment.user.name} </Text>
 
               <Text>{comment.comment_body} </Text>
@@ -64,7 +55,7 @@ function BlogDisplay({ user }) {
         </>
       </Card>
 
-      <TryComments singleBlog={singleBlog} />
+      <TryComments user={user} singleBlog={singleBlog} />
     </div>
   );
 }

@@ -20,8 +20,7 @@ function Blogs() {
 
         fetch('/blogs')
         .then(res=>res.json())
-        .then(data=>{setBlogs(data)
-        console.log(data)})
+        .then(data=>{setBlogs(data)})
         .catch(e=>console.log(e))
     },[])
 

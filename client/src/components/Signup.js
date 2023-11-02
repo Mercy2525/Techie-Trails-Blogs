@@ -3,13 +3,14 @@ import '../styles/Signup.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
 import { faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 function Signup() {
   const [showPassword, setShowPassword] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user, setUser] = useState(null);
+  const navigate=useNavigate()
 
 
   const [signupFormData, setSignupFormData] = useState({
@@ -86,6 +87,7 @@ function Signup() {
         const data = await response.json();
         setLoginFormData({ username: '', password: '' });
         alert('Login successful: ' + data.message);
+        navigate('/blogs')
       } else {
         alert('Login failed');
       }
@@ -209,7 +211,7 @@ function Signup() {
               )}
             </span>
           </div>
-          <button onClick={handleLogin}>Login</button>
+                <button onClick={handleLogin}>Login</button>          
           <p>
             Do not have an account?{' '}
             <a href="#" onClick={showSignupSection}>

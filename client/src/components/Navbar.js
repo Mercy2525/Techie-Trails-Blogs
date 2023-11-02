@@ -2,12 +2,16 @@ import React from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import { Breadcrumb, BreadcrumbItem, Button } from '@chakra-ui/react'
 
+
+
 import {ChevronRightIcon} from '@chakra-ui/icons'
 
 
 function Navbar(){
     return (
-    <nav>
+    <nav >
+ 
+      
 
       <Breadcrumb alignContent={'centre'} textAlign={'centre'} spacing='18px' separator={<ChevronRightIcon />}>
         <BreadcrumbItem>
@@ -28,23 +32,16 @@ function Navbar(){
           </Button>
         </BreadcrumbItem>
 
-
-        {/* <BreadcrumbItem isCurrentPage>
-            <Button colorScheme='green'>
-              <Link to={'/blogform'}>BlogForm</Link>
-            </Button>
-        </BreadcrumbItem> */}
-
         <BreadcrumbItem>
           <Button colorScheme={'green'}>
             <Link to={'/signup'}>Signup</Link>
           </Button>
         </BreadcrumbItem>
 
-       
-
         
       </Breadcrumb>
+
+    
 
       <Outlet></Outlet>
 
