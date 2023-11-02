@@ -1,81 +1,59 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect,useState } from 'react'
+import { Button } from '@chakra-ui/react'
 
-function Comments({ postId }) {
+function TryComments({singleBlog, user}) {
 
-  const [comments, setComments] = useState([]);
-  const [commentText, setCommentText] = useState('');
-  const [showComments, setShowComments] = useState(true);
+    const [comment, setComment] = useState([]);
+    const[addComment,setAddComment]=useState('')
+   
 
-  const {id}=useParams()
+  //fetch comments
+    useEffect(()=>{
+        fetch(`/comments`)
+        .then(res=>res.json())
+        .then(data=>setComment(data))
+        .catch(e=>console.log(e))
+    },[])
 
-  const loadComments = async () => {
-    try {
-      // Fetch comments for post Flask API
-      const response = await fetch(`/comment/${id}`);
-      if (response.ok) {
-        const data = await response.json();
-        setComments(data);
-      }
-    } catch (error) {
-      console.error('Error fetching comments:', error);
+  
+    function handleAdd(newComment){
+      setComment([...comment,newComment])
     }
-  };
 
-  useEffect(() => {
-    loadComments();
-  }, [postId]);
+    function submitComment(e){
+      e.preventDefault()
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!commentText) return;
-
-    try {
-      // Submit the comment to Flask API
-      const response = await fetch(`/comments`, {
+      fetch('/comments',{
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+        headers:{
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ comment_body: commentText }),
-      });
+        body: JSON.stringify({
+          comment_body:addComment,
+          user_id:user.id,
+          blog_id:singleBlog.id
+        })
+      })
+      .then(res=>res.json())
+      .then(data=>handleAdd(data))
+      .catch(e=>console.log(e))
 
-      if (response.ok) {
-        const newComment = await response.json();
-        setComments([...comments, newComment]);
-        setCommentText('');
-      }
-    } catch (error) {
-      console.error('Error submitting comment:', error);
     }
-  };
 
+   
   return (
     <div>
-      <h3>Comments</h3>
-      <button onClick={() => setShowComments(!showComments)}>
-        {showComments ? 'Hide Comments' : 'View Comments'}
-      </button>
-      {showComments && (
-        <div className="comments-list">
-          
-            <div key={comments.id}>
-              <p>{comments.comment_body}</p>
-            </div>
-          
-          
-          <form onSubmit={handleSubmit}>
+        <h4>Add comment</h4>
+        <form onSubmit={submitComment}>
             <textarea
-              placeholder="Add a comment..."
-              value={commentText}
-              onChange={(e) => setCommentText(e.target.value)}
-            />
-            <button type="submit">Submit Comment</button>
-          </form>
-        </div>
-      )}
+              placeholder="Leave a comment..."
+              // value={comment}
+              onChange={(e) => setAddComment(e.target.value)}
+            />           
+            <Button type='submit'>Add comment</Button>
+        </form>
     </div>
-  );
+  )
 }
 
-export default Comments;
+export default TryComments
