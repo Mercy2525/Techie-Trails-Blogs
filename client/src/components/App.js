@@ -7,6 +7,7 @@ import Navbar from './Navbar';
 import About from './About';
 import Blogs from './Blogs';
 import BlogDisplay from './BlogDisplay';
+import Contact from './Contact';
 
 
 
@@ -31,7 +32,8 @@ function App() {
               <Route path="/signup" element={<Signup />} />
               <Route path="/blog/:id" element={<BlogDisplay user={user} />}/>
               <Route path='/about'element={<About/>}/>
-              <Route path='/blogs' element={<Blogs  />} />        
+              <Route path='/blogs' element={<Blogs  />} />       
+              <Route path='/contacts' element={<Contact/>} />  
           </Route> 
       </Routes>
     

@@ -8,11 +8,10 @@ function About() {
 
       <Heading textTransform={'uppercase'} size={'lg'} textAlign={'center'}>About Us</Heading>
       <Heading p={2} size={'lg'}>Welcome All</Heading>
-      
-      
+    
 
 
-<section class="about">
+  <section class="about">
       
 
      <div class="row">
@@ -44,7 +43,7 @@ function About() {
      </section>
   <section class="contact">
    
-    <a href="" class="hero-btn">CONTACT US</a>
+    <a href="/contacts" class="hero-btn">CONTACT US</a>
   </section>
   <footer>
     <div class="footer-content">
