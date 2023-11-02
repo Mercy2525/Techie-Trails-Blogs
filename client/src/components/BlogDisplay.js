@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom'
 import { Card, CardHeader, CardBody, CardFooter,Heading,Box,Text,Stack,StackDivider, Button, Divider, ButtonGroup } from '@chakra-ui/react'
 
 import { useParams } from 'react-router-dom'
+import Comments from './Comments'
+import TryComments from './TryComments'
 
 function BlogDisplay() {
 
@@ -62,6 +64,8 @@ function BlogDisplay() {
           
         </Card>
 
+
+        <TryComments singleBlog={singleBlog}/>
         
 
 

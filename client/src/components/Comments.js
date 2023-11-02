@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 function Comments({ postId }) {
+
   const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState('');
-  const [showComments, setShowComments] = useState(false);
+  const [showComments, setShowComments] = useState(true);
+
+  const {id}=useParams()
 
   const loadComments = async () => {
     try {
       // Fetch comments for post Flask API
-      const response = await fetch(`/comment/${postId}/comments`);
+      const response = await fetch(`/comment/${id}`);
       if (response.ok) {
         const data = await response.json();
         setComments(data);
@@ -28,12 +32,12 @@ function Comments({ postId }) {
 
     try {
       // Submit the comment to Flask API
-      const response = await fetch(`/api/posts/${postId}/comments`, {
+      const response = await fetch(`/comments`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ text: commentText }),
+        body: JSON.stringify({ comment_body: commentText }),
       });
 
       if (response.ok) {
@@ -54,11 +58,12 @@ function Comments({ postId }) {
       </button>
       {showComments && (
         <div className="comments-list">
-          {comments.map((comment) => (
-            <div key={comment.id}>
-              <p>{comment.text}</p>
+          
+            <div key={comments.id}>
+              <p>{comments.comment_body}</p>
             </div>
-          ))}
+          
+          
           <form onSubmit={handleSubmit}>
             <textarea
               placeholder="Add a comment..."
