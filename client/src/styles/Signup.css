@@ -1,11 +1,4 @@
 /* Signup.css */
-body {
-    background: url("https://media.istockphoto.com/id/1413603540/photo/doctor-researcher-or-scientist-browsing-the-internet-on-a-tablet-for-information-while.jpg?s=612x612&w=0&k=20&c=nHU23UEbj4jBXPGKZHsicZSS-F0iYm3rOeAASDgBe8U=");
-    background-size: cover;
-    background-position: center;
-    height: 100vh;
-    margin: 0; 
-}
 .login-container {
     display: flex;
     flex-direction: column;
