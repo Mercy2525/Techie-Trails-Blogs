@@ -90,9 +90,11 @@ api.add_resource(Logout, '/logout', endpoint='logout')
 class CheckSession(Resource):
     def get(self):
         if session.get('userid'):
-            return 'user in session'
+            user=User.query.filter(User.id==session.get('userid')).first()
+            user_dict=user.to_dict()
+            return make_response(jsonify(user_dict),200)
         else:
-            return 'user is not in session'
+            return 'user is not in session please log in'
         
 
 api.add_resource(CheckSession, '/session', endpoint='session')
