@@ -12,19 +12,21 @@ function BlogDisplay({user}) {
   const { id } = useParams();
 
   const [singleBlog, setSingleBlog] = useState([]);
+  const [commentarray, setCommentarray]= useState([null])
 
   useEffect(() => {
     fetch(`/blog/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setSingleBlog(data);
+        setCommentarray(data.comments)
       })
       .catch((e) => console.log(e));
   }, [id]);
+ console.log(commentarray)
 
 
-
-  if (!singleBlog.comments) {
+  if  (!singleBlog.comments) {
     return <div>No Comments available for this blog.</div>;
   }
 
@@ -52,7 +54,7 @@ function BlogDisplay({user}) {
                 
                 <Divider p={2} />
                 <Heading p={3} size={"sm"}>Blog Comments</Heading>
-                {singleBlog.comments.map((comment) => (
+                {commentarray? (commentarray.map((comment) => (
                   <div key={comment.id}>
 
                     <Flex paddingLeft="30px" justifyContent="flex-start">            
@@ -63,12 +65,12 @@ function BlogDisplay({user}) {
                       </Text>
                      </Flex>
                   </div>
-                ))}
+                ))): null }
               </>
             </Card>
           </Box>
 
-      <Comments user={user} singleBlog={singleBlog} />
+      <Comments user={user} singleBlog={singleBlog} commentarray={commentarray} setCommentarray={setCommentarray} />
     </div>
   );
 }
