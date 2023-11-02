@@ -11,7 +11,9 @@ const BlogForm = ({handleAdd}) => {
   
 
   const handleSubmit = (e) => {
+    e.target.reset()
     e.preventDefault();
+    
     
 
     fetch('/blogs', {
@@ -28,6 +30,10 @@ const BlogForm = ({handleAdd}) => {
       .then((response) => response.json())
       .then((data) => handleAdd(data))
       .catch(e=>console.log(e))
+
+      setTitle('');
+      setContent('');
+      setAuthor('');
     
   };
 
