@@ -1,5 +1,5 @@
 import React, { useEffect,useState } from 'react'
-import { Button,Box,Card, Heading } from '@chakra-ui/react'
+import { Button,Box, Heading } from '@chakra-ui/react'
 
 function Comments({singleBlog, user, commentarray , setCommentarray }) {
 
@@ -45,7 +45,6 @@ function Comments({singleBlog, user, commentarray , setCommentarray }) {
    
   return (
     <div>
-
         <Box p={5}> 
         <Heading size={'md'} textAlign={'center'}>Add a comment</Heading>
                

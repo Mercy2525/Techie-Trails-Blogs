@@ -1,0 +1,42 @@
+.contact{
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .developer-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  
+  .developer-card {
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .developer-card img {
+    max-width: 50%;
+    margin-bottom: 10px;
+    align-items: center;
+
+  }
+  
+  .developer-card h3 {
+    font-size: 2rem;
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  
+  .developer-card p {
+    font-size: 1rem;
+    margin-top: 10px;
+    font-weight:bold;
+  }
+  .heading-about p{
+  font-weight: bolder;
+  font-size: 20px;
+  }
