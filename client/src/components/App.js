@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import Signup from './Signup';
@@ -12,6 +12,15 @@ import BlogDisplay from './BlogDisplay';
 
 
 function App() {
+  const [user, setUser]=useState({})
+ 
+  useEffect(()=>{
+    fetch("/session")
+    .then(res=>res.json())
+    .then(data=>{
+      setUser(data)})
+  },[])
+
   return (
     <div>
           
@@ -19,9 +28,9 @@ function App() {
           <Route element={<Navbar/>}>
               <Route path="/" element={<HomePage />} />
               <Route path="/signup" element={<Signup />} />
-              <Route path="/blog/:id" element={<BlogDisplay/>}/>
+              <Route path="/blog/:id" element={<BlogDisplay user={user} />}/>
               <Route path='/about'element={<About/>}/>
-              <Route path='/blogs' element={<Blogs/>} />
+              <Route path='/blogs' element={<Blogs  />} />
               <Route path='b.blogs' element={<BenBlogs/>} />        
           </Route> 
       </Routes>
