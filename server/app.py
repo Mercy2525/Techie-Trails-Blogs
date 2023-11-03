@@ -2,6 +2,7 @@ from flask import Flask
 from flask import Flask, jsonify, request, make_response, session
 from flask_migrate import Migrate
 from flask_restful import Api, Resource
+from sqlalchemy import and_
 from werkzeug.exceptions import NotFound
 from flask_cors import CORS
 
@@ -164,12 +165,14 @@ class BlogById(Resource):
 
 
     def delete(self,id):
-        blog= Blog.query.filter_by(id=id).first() 
+        blog= Blog.query.filter_by(id=id).first()
+        comment=Comment.query.filter( and_(Comment.blog_id == id , Comment.user_id==session.get('userid')) ).delete() 
 
         if not blog:
             return {"error": "Blog not found"}, 404
 
         db.session.delete(blog)
+       
         db.session.commit()
 
         response_body={"message": "Blog deleted successfully"},200
