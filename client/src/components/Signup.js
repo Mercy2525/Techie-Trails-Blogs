@@ -1,28 +1,27 @@
-import React, { useState } from 'react';
-import '../styles/Signup.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye } from '@fortawesome/free-solid-svg-icons';
-import { faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import "../styles/Signup.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
+import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-function Signup() {
+function Signup( {isLoggedIn, setIsLoggedIn} ) {
   const [showPassword, setShowPassword] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const navigate=useNavigate()
-
+ 
+  const navigate = useNavigate();
 
   const [signupFormData, setSignupFormData] = useState({
-    name: '',
-    username: '',
-    password: '',
-    confirmPassword: '',
+    name: "",
+    username: "",
+    password: "",
+    confirmPassword: "",
   });
 
   const [loginFormData, setLoginFormData] = useState({
-    username: '',
-    password: '',
+    username: "",
+    password: "",
   });
 
   const togglePasswordVisibility = () => {
@@ -30,26 +29,27 @@ function Signup() {
   };
 
   const handleSignup = async () => {
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
 
     if (!passwordRegex.test(signupFormData.password)) {
       alert(
-        'Password must include at least one uppercase letter, one lowercase letter, one special character, and be at least six characters long.'
+        "Password must include at least one uppercase letter, one lowercase letter, one special character, and be at least six characters long."
       );
       return;
     }
 
     if (signupFormData.password !== signupFormData.confirmPassword) {
-      alert('Password and confirmation do not match.');
+      alert("Password and confirmation do not match.");
       return;
     }
 
     try {
       //  API request for signup
-      const response = await fetch('/signup', {
-        method: 'POST',
+      const response = await fetch("/signup", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(signupFormData),
       });
@@ -57,52 +57,71 @@ function Signup() {
       if (response.ok) {
         const data = await response.json();
         setSignupFormData({
-          name: '',
-          username: '',
-          password: '',
-          confirmPassword: '',
+          name: "",
+          username: "",
+          password: "",
+          confirmPassword: "",
         });
-        alert('Signup successful: ' + data.username);
+        alert("Signup successful: " + data.username);
+        setShowLogin(false)
       } else {
-        alert('Signup failed');
+        alert("Signup failed");
       }
     } catch (error) {
-      console.error('Error during signup:', error);
-      alert('Error during signup: ' + error.message);
+      console.error("Error during signup:", error);
+      alert("Error during signup: " + error.message);
     }
   };
 
   const handleLogin = async () => {
     try {
       // API request for login
-      const response = await fetch('/login', {
-        method: 'POST',
+      const response = await fetch("/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(loginFormData),
       });
 
       if (response.ok) {
         const data = await response.json();
-        setLoginFormData({ username: '', password: '' });
-        alert('Login successful: ' + data.message);
+        setLoginFormData({ username: "", password: "" });
+        alert("Login successful: " + data.message);
+         setIsLoggedIn(true);
         navigate('/blogs')
       } else {
-        alert('Login failed');
+        alert("Login failed");
       }
     } catch (error) {
-      console.error('Error during login:', error);
-      alert('Error during login: ' + error.message);
+      console.error("Error during login:", error);
+      alert("Error during login: " + error.message);
     }
   };
-  
-  const handleLogout = () => {
-    // Log the user out
+
+  const handleLogout = async () => {
+    try {
+      // Send a GET request to the server to log the user out
+      const response = await fetch('/logout', {
+        method: 'GET',
+      });
+
+  if (response.ok) {
+    // Successful logout
     setIsLoggedIn(false);
+  
+    navigate('/'); //Redirect to appropriate route
+  } else {
+    // Handle logout failure
+    console.error('Logout failed');
+  }
+} catch (error) {
+  console.error('Error during logout:', error);
+}
   };
 
   const showLoginSection = () => {
+   
     setShowLogin(true); // Show the login section
   };
 
@@ -118,8 +137,7 @@ function Signup() {
           <h2>Logout</h2>
           <button onClick={handleLogout}>Logout</button>
         </div>
-
-      ):!showLogin ? (
+      ) : !showLogin ? (
         <div className="form">
           <h2>Sign Up</h2>
           <input
@@ -140,24 +158,30 @@ function Signup() {
           />
           <div className="password-input">
             <input
-              type={showPassword ? 'text' : 'password'}
+              type={showPassword ? "text" : "password"}
               placeholder="Password"
               value={signupFormData.password}
               onChange={(e) =>
-                setSignupFormData({ ...signupFormData, password: e.target.value })
+                setSignupFormData({
+                  ...signupFormData,
+                  password: e.target.value,
+                })
               }
             />
             <span onClick={togglePasswordVisibility}>
               {showPassword ? (
-                <FontAwesomeIcon icon={faEye} style={{ fontSize: '16px' }} />
+                <FontAwesomeIcon icon={faEye} style={{ fontSize: "16px" }} />
               ) : (
-                <FontAwesomeIcon icon={faEyeSlash} style={{ fontSize: '16px' }} />
+                <FontAwesomeIcon
+                  icon={faEyeSlash}
+                  style={{ fontSize: "16px" }}
+                />
               )}
             </span>
           </div>
           <div className="password-input">
             <input
-              type={showPassword ? 'text' : 'password'}
+              type={showPassword ? "text" : "password"}
               placeholder="Confirm Password"
               value={signupFormData.confirmPassword}
               onChange={(e) =>
@@ -169,15 +193,18 @@ function Signup() {
             />
             <span onClick={togglePasswordVisibility}>
               {showPassword ? (
-                <FontAwesomeIcon icon={faEye} style={{ fontSize: '16px' }} />
+                <FontAwesomeIcon icon={faEye} style={{ fontSize: "16px" }} />
               ) : (
-                <FontAwesomeIcon icon={faEyeSlash} style={{ fontSize: '16px' }} />
+                <FontAwesomeIcon
+                  icon={faEyeSlash}
+                  style={{ fontSize: "16px" }}
+                />
               )}
             </span>
           </div>
           <button onClick={handleSignup}>Sign Up</button>
           <p>
-            Already have an account?{' '}
+            Already have an account?{" "}
             <a href="#" onClick={showLoginSection}>
               Login
             </a>
@@ -196,7 +223,7 @@ function Signup() {
           />
           <div className="password-input">
             <input
-              type={showPassword ? 'text' : 'password'}
+              type={showPassword ? "text" : "password"}
               placeholder="Password"
               value={loginFormData.password}
               onChange={(e) =>
@@ -205,24 +232,25 @@ function Signup() {
             />
             <span onClick={togglePasswordVisibility}>
               {showPassword ? (
-                <FontAwesomeIcon icon={faEye} style={{ fontSize: '16px' }} />
+                <FontAwesomeIcon icon={faEye} style={{ fontSize: "16px" }} />
               ) : (
-                <FontAwesomeIcon icon={faEyeSlash} style={{ fontSize: '16px' }} />
+                <FontAwesomeIcon
+                  icon={faEyeSlash}
+                  style={{ fontSize: "16px" }}
+                />
               )}
             </span>
           </div>
-                <button onClick={handleLogin}>Login</button>          
+          <button onClick={handleLogin}>Login</button>
           <p>
-            Do not have an account?{' '}
+            Do not have an account?{" "}
             <a href="#" onClick={showSignupSection}>
               Sign Up
             </a>
           </p>
         </div>
       )}
-      <div>
-
-    </div>
+      <div></div>
     </div>
   );
 }
