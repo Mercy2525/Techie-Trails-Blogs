@@ -13,7 +13,7 @@ import Contact from './Contact';
 
 function App() {
   const [user, setUser]=useState({})
- 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   useEffect(()=>{
     fetch("/session")
     .then(res=>res.json())
@@ -27,9 +27,9 @@ function App() {
       <Heading color={'orange.600'} p={2} size={'lg'} textAlign={'center'} textTransform='uppercase' >Techie Trails Blogs</Heading>
           
       <Routes>
-          <Route element={<Navbar/>}>
+          <Route element={<Navbar isLoggedIn={isLoggedIn}  />}>
               <Route path="/" element={<HomePage />} />
-              <Route path="/signup" element={<Signup />} />
+              <Route path="/signup" element={<Signup isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
               <Route path="/blog/:id" element={<BlogDisplay user={user} />}/>
               <Route path='/about'element={<About/>}/>
               <Route path='/blogs' element={<Blogs  />} />       
