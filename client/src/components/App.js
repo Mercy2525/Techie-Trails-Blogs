@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { Center, Heading } from '@chakra-ui/react';
+import {Heading } from '@chakra-ui/react';
 import Signup from './Signup';
 import HomePage from './HomePage';
 import Navbar from './Navbar';
@@ -27,7 +27,7 @@ function App() {
       <Heading color={'orange.600'} p={2} size={'lg'} textAlign={'center'} textTransform='uppercase' >Techie Trails Blogs</Heading>
           
       <Routes>
-          <Route element={<Navbar isLoggedIn={isLoggedIn}  />}>
+          <Route element={<Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}  />}>
               <Route path="/" element={<HomePage />} />
               <Route path="/signup" element={<Signup isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
               <Route path="/blog/:id" element={<BlogDisplay user={user} />}/>

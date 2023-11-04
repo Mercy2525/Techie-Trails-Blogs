@@ -7,8 +7,6 @@ function About() {
     <div>
 
       <Heading textTransform={'uppercase'} size={'lg'} textAlign={'center'}>About Us</Heading>
-      <Heading p={2} size={'lg'}>Welcome All</Heading>
-    
 
 
   <section class="about">

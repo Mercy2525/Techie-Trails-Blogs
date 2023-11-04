@@ -5,12 +5,17 @@
     align-items: center;
     justify-content: center;
     height: 100vh;
+    background-color: #CBD5E0;
+    margin-top: 20px;
+    border-radius: 20px;
+
+    
 }
   
   h1 {
     font-size: 30px;
     margin: 20px 0;
-    color: #0b0b0b;
+    color:#fb9905;
     font-weight: bolder;
 
   }
@@ -18,7 +23,7 @@
   .form {
     background: #fff;
     padding: 20px;
-    border-radius: 5px;
+    border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin: 10px;
     width: 400px;
@@ -28,6 +33,7 @@
     font-size: 20px;
     margin: 10px 0;
     color: rgb(10, 10, 10);
+    text-align: center;
   }
   
   input[type="text"],
@@ -38,6 +44,9 @@
     border: 1px solid #ccc;
     border-radius: 3px;
     font-size: larger;
+    border-radius: 9px;
+    margin-right: 10px;
+    
   }
   
   .password-input {
@@ -52,19 +61,6 @@
     }
   }
   
-  button {
-    background: #007bff;
-    color: #9fca27;
-    border: none;
-    border-radius: 3px;
-    padding: 10px 20px;
-    margin-top: 10px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background: #0056b3;
-  }
   
 
   

@@ -4,13 +4,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { Button } from "@chakra-ui/react";
+import { useSnackbar } from "notistack";
+
 
 function Signup( {isLoggedIn, setIsLoggedIn} ) {
   const [showPassword, setShowPassword] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
  
   const navigate = useNavigate();
+  const {enqueueSnackbar}=useSnackbar()
 
   const [signupFormData, setSignupFormData] = useState({
     name: "",
@@ -33,14 +36,13 @@ function Signup( {isLoggedIn, setIsLoggedIn} ) {
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
 
     if (!passwordRegex.test(signupFormData.password)) {
-      alert(
-        "Password must include at least one uppercase letter, one lowercase letter, one special character, and be at least six characters long."
-      );
+      enqueueSnackbar('Password must include at least one uppercase letter, one lowercase letter, one special character, and be at least six characters long.', {variant: 'error'})
       return;
     }
 
     if (signupFormData.password !== signupFormData.confirmPassword) {
-      alert("Password and confirmation do not match.");
+      enqueueSnackbar('Password and confirmation do not match.',{variant:'error'})
+      
       return;
     }
 
@@ -62,13 +64,14 @@ function Signup( {isLoggedIn, setIsLoggedIn} ) {
           password: "",
           confirmPassword: "",
         });
-        alert("Signup successful: " + data.username);
+        enqueueSnackbar(`Hello, ${data.name} Account created successfully`, {variant:'success'})
+
         setShowLogin(false)
       } else {
-        alert("Signup failed");
+        enqueueSnackbar('Signup failed', {variant:'error'})
       }
     } catch (error) {
-      console.error("Error during signup:", error);
+     
       alert("Error during signup: " + error.message);
     }
   };
@@ -87,11 +90,13 @@ function Signup( {isLoggedIn, setIsLoggedIn} ) {
       if (response.ok) {
         const data = await response.json();
         setLoginFormData({ username: "", password: "" });
-        alert("Login successful: " + data.message);
+        enqueueSnackbar('Login Successful', {variant:'success'})
+
          setIsLoggedIn(true);
         navigate('/blogs')
       } else {
-        alert("Login failed");
+        enqueueSnackbar('Login Failed',{variant:'error'})
+        
       }
     } catch (error) {
       console.error("Error during login:", error);
@@ -202,12 +207,14 @@ function Signup( {isLoggedIn, setIsLoggedIn} ) {
               )}
             </span>
           </div>
-          <button onClick={handleSignup}>Sign Up</button>
+          
+          <Button _hover={{'bg':'black'}} colorScheme="blue" onClick={handleSignup}>Sign Up</Button>
+          
           <p>
             Already have an account?{" "}
-            <a href="#" onClick={showLoginSection}>
+            <Button variant={'ghost'} colorScheme="blue" onClick={showLoginSection}>
               Login
-            </a>
+            </Button>
           </p>
         </div>
       ) : (
@@ -241,16 +248,16 @@ function Signup( {isLoggedIn, setIsLoggedIn} ) {
               )}
             </span>
           </div>
-          <button onClick={handleLogin}>Login</button>
+          <Button _hover={{'bg':'black'}} colorScheme="blue" onClick={handleLogin}>Login</Button>
           <p>
             Do not have an account?{" "}
-            <a href="#" onClick={showSignupSection}>
+            <Button colorScheme="blue" variant={'ghost'} onClick={showSignupSection}>
               Sign Up
-            </a>
+            </Button>
           </p>
         </div>
       )}
-      <div></div>
+      
     </div>
   );
 }
