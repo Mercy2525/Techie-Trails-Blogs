@@ -16,13 +16,11 @@ margin-top: 10px;
 }
 
 .home_h1 h1 {
-    /* flex-direction: row; */
     justify-content: center;
     align-items: center;
     margin-left: 10px;
     color: #007acc;
     font-weight: 800;
-    /* float: left; */
     font-size: 250%;
     position: absolute;
     display: flex;

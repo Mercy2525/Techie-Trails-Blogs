@@ -3,12 +3,16 @@ import '../styles/Contacts.css';
 
 function Developer({ name, image, description, contact }) {
   return (
+   
+    <div className='all'> 
     <div className="developer-card">
       <img src={image} alt={name} />
-      <h3>{name}</h3>
+      <h3>{name}</h3> 
       <p>{description}</p>
       <p>{contact}</p>
     </div>
+    </div>
+    
   );
 }
 
@@ -55,10 +59,10 @@ function Contact() {
   return (
     <div className='heading-about'>
       <p>
-        Welcome to Techie Trails Blogs, where we explore the exciting world of coding and how it intertwines with our daily lives.
+        Welcome to Techie Trails Blogs.
       </p>
       <p>
-        Our team of five passionate individuals is dedicated to sharing their stories, experiences, and insights in the realms of coding and lifestyle. Let us introduce ourselves:
+        Our team of five passionate individuals share snippets of their stories, experiences, and insights in the realms of coding and lifestyle:
       </p>
       <div className="developer-list">
         {teamMembers.map((member, index) => (
