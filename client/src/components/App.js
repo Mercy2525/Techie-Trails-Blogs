@@ -14,12 +14,16 @@ import Contact from './Contact';
 function App() {
   const [user, setUser]=useState({})
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  useEffect(()=>{
+  useEffect(() => {
     fetch("/session")
-    .then(res=>res.json())
-    .then(data=>{
-      setUser(data)})
-  },[])
+      .then(res => res.json())
+      .then(data => {
+        setUser(data);
+      })
+      .catch(error => {
+        console.error("Error fetching session:", error);
+      });
+  }, [isLoggedIn]);
 
   return (
     <div>
@@ -27,7 +31,7 @@ function App() {
       <Heading color={'orange.600'} p={2} size={'lg'} textAlign={'center'} textTransform='uppercase' >Techie Trails Blogs</Heading>
           
       <Routes>
-          <Route element={<Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}  />}>
+          <Route element={<Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} user={user} />}>
               <Route path="/" element={<HomePage />} />
               <Route path="/signup" element={<Signup isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
               <Route path="/blog/:id" element={<BlogDisplay user={user} />}/>

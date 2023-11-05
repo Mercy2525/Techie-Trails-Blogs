@@ -82,7 +82,7 @@ class Logout(Resource):
     def delete(self):
         if session.get('userid'):
             session['userid']=None
-            return {'message': 'User logged out successfully'}
+            return jsonify({'message': 'User logged out successfully'})
         else: 
             return {"error": "User must be logged in"}
 
@@ -249,7 +249,7 @@ class CommentById(Resource):
     def delete(self,id):
         comment = Comment.query.filter_by(id=id).first()
         if not comment:
-            return("comment not found"),404
+            return({"message":"comment not found"}),404
         db.session.delete(comment)
         db.session.commit()
         response = make_response({"message": "comment deleted successfully"},200)
