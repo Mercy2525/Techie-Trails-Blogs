@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { enqueueSnackbar, useSnackbar } from "notistack";
 
 import {
   Card,
@@ -22,6 +23,7 @@ function BlogDisplay({ user }) {
   const [singleBlog, setSingleBlog] = useState([]);
   const [commentarray, setCommentarray] = useState([null]);
   const navigate = useNavigate();
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     fetch(`/blog/${id}`)
@@ -32,24 +34,50 @@ function BlogDisplay({ user }) {
       })
       .catch((e) => console.log(e));
   }, [id]);
-
+  // console.log(singleBlog);
   if (!singleBlog.comments) {
     return <div>No Comments available for this blog.</div>;
   }
 
-  function handledelete() {
-    fetch(`/blog/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        alert(data.message);
-        navigate("/blogs");
-        console.log(data);
+  // function handledelete() {
+  //   fetch(`/blog/${id}`, {
+  //     method: "DELETE",
+  //     headers: {
+  //       "Content-type": "application/json",
+  //     },
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       alert(data.message);
+  //       navigate("/blogs");
+
+  //       console.log(data);
+  //     });
+  // }
+  async function handlecomdel(id) {
+    try {
+      const response = await fetch(`/comment/${id}`, {
+        method: "DELETE",
+        headers: {
+          "content-type": "application/json",
+        },
       });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      enqueueSnackbar(data.message, {variant:'success'} )
+      const commenttodel = commentarray.findIndex((data) => data.id == id);
+      if (commenttodel !== -1) {
+        commentarray.splice(commenttodel);
+      }
+
+      setRefresh(!refresh);
+    } catch (error) {
+      console.error("Error deleting comment:", error.message);
+    }
   }
 
   return (
@@ -68,7 +96,7 @@ function BlogDisplay({ user }) {
               </Stack>
             </CardBody>
 
-            <Flex paddingRight="30px" justifyContent="flex-end">
+            {/* <Flex paddingRight="30px" justifyContent="flex-end">
               <Button
                 onClick={handledelete}
                 _hover={{ bg: "red" }}
@@ -78,7 +106,7 @@ function BlogDisplay({ user }) {
               >
                 Delete Blog
               </Button>
-            </Flex>
+            </Flex> */}
 
             <Divider p={2} />
             <Heading p={3} size={"sm"}>
@@ -96,6 +124,12 @@ function BlogDisplay({ user }) {
                         </Box>
                         {comment.user.name}
                       </Text>
+                      <button
+                        onClick={() => handlecomdel(comment.id)}
+                        style={{ marginLeft: "50%", color: 'red' }}
+                      >
+                        delete
+                      </button>
                     </Flex>
                   </div>
                 ))
